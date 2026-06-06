@@ -26,8 +26,13 @@ public class SeatGeekProvider implements EventProvider {
     private final RestClient http;
 
     public SeatGeekProvider(@Value("${app.discover.seatgeek.client-id:}") String clientId) {
+        this(clientId, RestClient.builder().baseUrl("https://api.seatgeek.com/2").build());
+    }
+
+    // Constructor for testing
+    SeatGeekProvider(String clientId, RestClient http) {
         this.clientId = clientId;
-        this.http = RestClient.builder().baseUrl("https://api.seatgeek.com/2").build();
+        this.http = http;
     }
 
     @Override public String name() { return "SeatGeek"; }
@@ -41,6 +46,7 @@ public class SeatGeekProvider implements EventProvider {
                 .queryParam("q", query)
                 .queryParam("per_page", 20)
                 .queryParam("client_id", clientId)
+                .build(false)
                 .toUriString();
         try {
             Response body = http.get()

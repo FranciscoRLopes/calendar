@@ -38,11 +38,16 @@ public class AgendaLxProvider implements EventProvider {
     private final RestClient http;
 
     public AgendaLxProvider() {
-        this.http = RestClient.builder()
+        this(RestClient.builder()
                 .baseUrl("https://www.agendalx.pt/wp-json/agendalx/v1")
                 .defaultHeader("User-Agent",
                         "Mozilla/5.0 (compatible; meetings-app/0.1; +http://localhost)")
-                .build();
+                .build());
+    }
+
+    // Constructor for testing
+    AgendaLxProvider(RestClient http) {
+        this.http = http;
     }
 
     @Override public String name() { return "Agenda Cultural de Lisboa"; }
@@ -54,6 +59,7 @@ public class AgendaLxProvider implements EventProvider {
         String path = UriComponentsBuilder.fromPath("/events")
                 .queryParam("search", query)
                 .queryParam("per_page", 20)
+                .build(false)
                 .toUriString();
         try {
             List<AlxEvent> raw = http.get()

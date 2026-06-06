@@ -1,5 +1,7 @@
 package com.example.meetings.discover;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import java.util.Set;
 
 @Service
 public class DiscoveryService {
+
+    private static final Logger log = LoggerFactory.getLogger(DiscoveryService.class);
 
     private final List<EventProvider> providers;
 
@@ -26,10 +30,14 @@ public class DiscoveryService {
         List<DiscoveredEvent> merged = new ArrayList<>();
         for (EventProvider p : providers) {
             if (!p.isConfigured()) continue;
-            for (DiscoveredEvent e : p.search(query)) {
-                // URL is the most reliable cross-provider dedup key; fall back to source+id when missing.
-                String key = e.url() != null ? e.url() : e.source() + ":" + e.externalId();
-                if (seenUrls.add(key)) merged.add(e);
+            try {
+                for (DiscoveredEvent e : p.search(query)) {
+                    // URL is the most reliable cross-provider dedup key; fall back to source+id when missing.
+                    String key = e.url() != null ? e.url() : e.source() + ":" + e.externalId();
+                    if (seenUrls.add(key)) merged.add(e);
+                }
+            } catch (Exception ex) {
+                log.error("Provider " + p.name() + " threw an unexpected exception during search", ex);
             }
         }
         merged.sort(Comparator.comparing(DiscoveredEvent::start));
