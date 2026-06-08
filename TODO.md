@@ -2,6 +2,8 @@
 
 [cite_start]Este ficheiro acompanha o progresso da implementação dos testes para a aplicação **Calendar**, conforme os requisitos do Assignment 2[cite: 3].
 
+
+Atenção : No enunciado é dito que pode existir bugs e devemos encontra los.
 ## Checklist de Testes
 
 - [x] **1. Testes de Unidade (Business Logic)**
