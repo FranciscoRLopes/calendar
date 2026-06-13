@@ -23,6 +23,7 @@ public class TicketmasterProvider implements EventProvider {
     private final String countryCode;
     private final RestClient http;
 
+    @org.springframework.beans.factory.annotation.Autowired
     public TicketmasterProvider(
             @Value("${app.discover.ticketmaster.api-key:}") String apiKey,
             @Value("${app.discover.ticketmaster.country-code:PT}") String countryCode) {

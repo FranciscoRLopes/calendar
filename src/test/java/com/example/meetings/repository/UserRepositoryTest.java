@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * This keeps tests isolated from one another without requiring manual cleanup.
  */
 @DataJpaTest
-class UserRepositoryTest {
+class   UserRepositoryTest {
 
     @Autowired
     private TestEntityManager em;
