@@ -29,24 +29,24 @@ public class AppUserDetailsServiceTest {
 
     @BeforeEach
     void setUp() {
-        user = new User("john_doe", "john@example.com", "encoded_password");
+        user = new User("joao_maria", "joaomaria@gmail.com", "encoded_password");
     }
 
     @Test
     void loadUserByUsername_Success() {
         // Arrange
-        when(userRepository.findByUsername("john_doe")).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername("joao_maria")).thenReturn(Optional.of(user));
 
         // Act
-        UserDetails userDetails = appUserDetailsService.loadUserByUsername("john_doe");
+        UserDetails userDetails = appUserDetailsService.loadUserByUsername("joao_maria");
 
         // Assert
         assertNotNull(userDetails);
-        assertEquals("john_doe", userDetails.getUsername());
+        assertEquals("joao_maria", userDetails.getUsername());
         assertEquals("encoded_password", userDetails.getPassword());
         assertTrue(userDetails.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().equals("ROLE_USER")));
-        verify(userRepository, times(1)).findByUsername("john_doe");
+        verify(userRepository, times(1)).findByUsername("joao_maria");
     }
 
     @Test

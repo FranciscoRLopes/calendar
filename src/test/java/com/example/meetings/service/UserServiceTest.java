@@ -30,8 +30,8 @@ public class UserServiceTest {
     @Test
     void register_Success() {
         // Arrange
-        String username = "new_user";
-        String email = "user@example.com";
+        String username = "joao_maria";
+        String email = "joaomaria@gmail.com";
         String rawPassword = "raw_password";
         String encodedPassword = "encoded_password";
 
@@ -77,8 +77,8 @@ public class UserServiceTest {
     @Test
     void requireByUsername_Success() {
         // Arrange
-        String username = "john_doe";
-        User user = new User(username, "john@example.com", "password");
+        String username = "john";
+        User user = new User(username, "john@gmail.com", "password");
         when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
 
         // Act
